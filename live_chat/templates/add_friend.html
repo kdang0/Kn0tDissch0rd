@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/lib.css">
+    <link rel="stylesheet" href="../static/css/homestyle.css">
+    <link rel="stylesheet" href="../static/css/colors.css">
+</head>
+
+<body class="background-color">
+    <main class="d-flex justify-content-center gap30 padding20">
+        <div class="d-flex">
+            <div class="left-panel d-flex flex-column align-items-start gap30">
+                <div id="home" class="rm-styling d-flex align-items-center justify-content-center blue">
+                    <p class="font20">home</p>
+                </div>
+                <div id="RM1" class="rm-styling d-flex align-items-center justify-content-center rm-color">
+                    <p class="font20">RM1</p>
+                </div>
+                <div id="RM2" class="rm-styling d-flex align-items-center justify-content-center rm-color">
+                    <p class="font20">RM2</p>
+                </div>
+                <div id="RM3" class="rm-styling d-flex align-items-center justify-content-center rm-color">
+                    <p class="font20">RM3</p>
+                </div>
+                <div id="RM4" class="rm-styling d-flex align-items-center justify-content-center rm-color">
+                    <p class="font20">RM4</p>
+                </div>
+                <div id="RM5" class="rm-styling d-flex align-items-center justify-content-center rm-color">
+                    <p class="font20">RM5</p>
+                </div>
+            </div>
+       
+            <div>
+                <img src="../static/images/face.png" class="display-icon displayPos green">
+                <img src="../static/images/edit.png" class="editPos">
+            </div>
+            
+        </div>
+        
+        <div class="mx-auto d-flex flex-column gap20">
+
+            <div>
+                <p class="display-4">add friend</p>
+                <input type="text" placeholder="search...">
+            </div>
+
+            <p id="sendrequest" class="font30 text-center">send friend request</p>
+        </div>    
+    </main>
+
+    <!-- <form class="mx-auto col-4">
+       
+    </form> -->
+
+    <script src="../static/js/testinghome.js">
+    </script>
+</body>
+
+</html>

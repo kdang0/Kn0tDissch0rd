@@ -68,6 +68,14 @@ button{
     width: 80px;
 }
 
+.gap10rem{
+    gap:10rem;
+}
+
+.gap50{
+    gap:50px;
+}
+
 .gap40{
     gap:40px;
 }
