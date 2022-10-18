@@ -1,0 +1,157 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100&display=swap'); */
+
+
+:root {
+    font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+    :root {
+        font-family: 'Inter var', sans-serif;
+    }
+}
+
+* {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    /* font-size: 24px;     */
+    line-height: 29px;
+    color: #464444
+}
+
+.background-color {
+    background-color: #B3CCDA;
+}
+
+.display-icon {
+    border-radius: 10px;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+}
+
+.green {
+    background-color: #97E2AC;
+}
+
+.message-styling {
+    background-color: #D9D9D9;
+    width: 50rem;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.date-padding {
+    padding-left: 4.5rem;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.gap10 {
+    gap: 10px;
+}
+
+.message-input {
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    border: 0
+}
+
+.message-input:active {
+    border: 1px solid #464444;
+}
+
+
+.message-log {
+    border: 1 solid black;
+    overflow-y: scroll;
+    height: 1023px;
+}
+
+::-webkit-scrollbar {
+    width: 40px;
+    margin-left: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(83, 118, 242, 0.4);
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(225, 225, 225, 0.4);
+    border-radius: 20px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(51, 73, 151, 0.4);
+    border-radius: 20px;
+}
+
+
+.left-panel {
+    padding-left: 20px;
+    padding-top: 5rem;
+    width: 509px;
+    height: 1024px;
+    left: 0px;
+    top: 0px;
+    border-radius: 0 100rem 100rem 0;
+    background: #A1AACC;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.right-panel {
+    padding-right: 20px;
+    padding-top: 10rem;
+    width: 509px;
+    height: 1024px;
+    left: 1440px;
+    top: 0px;
+    background: #A1AACC;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 100rem 0 0 100rem;
+}
+
+
+.rm-styling {
+    padding: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+}
+
+.user-styling {
+    width: 219px;
+    height: 54px;
+    border-radius: 10px;
+}
+
+.user-list{
+    overflow-y: scroll;
+    padding:20px;
+    height: 618px;
+}
+
+.flipped{
+    direction:rtl;
+}
+
+.member-icon{
+    width: 118px;
+    height: 118px;
+    position: relative;
+    left: 15rem;
+}
+
+.member-icon:hover{
+    cursor: pointer;
+}
+
+.user-list::-webkit-scrollbar {
+    width: 20px;
+}
