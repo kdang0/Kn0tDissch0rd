@@ -18,126 +18,62 @@
     <!-- Bootstrap CSS -->
     <link rel="preconnect" href="https://rsms.me/">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/lib.css">
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="../static/css/lib.css">
     <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/colors.css">
+    <link rel="stylesheet" href="../static/css/colors.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/colors.css') }}">
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 </head>
 
 <body class="background-color">
     <main class="d-flex justify-content-between gap30 padding20">
-        <div class="left-panel d-flex flex-column align-items-start gap30">
-            <div id="home" class="rm-styling d-flex align-items-center justify-content-center blue">
-                <p class="font20">home</p>
+        <div class="left-panel d-flex">
+            <div class="d-flex flex-column align-items-start gap30">
+                <div id="home" class="rm-styling d-flex align-items-center justify-content-center blue">
+                    <a href="/home" class="font20 no-a-styling">home</a>
+                </div>
+                {% for room in rooms %}
+                    {% if room.id == rm_id %}
+                        <div class="active rm-styling d-flex align-items-center justify-content-center rm-color">
+                            <a href="/rm/{{room.name}}/{{room.id}}" class="font20 no-a-styling">RM{{room.id}}</a>
+                        </div>
+                    {% else %} 
+                        <div class="rm-styling d-flex align-items-center justify-content-center rm-color">
+                            <a href="/rm/{{room.name}}/{{room.id}}" class="font20 no-a-styling">RM{{room.id}}</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-            <div class="rm-styling d-flex align-items-center justify-content-center rm-color">
-                <p class="font20">RM1</p>
-            </div>
-            <div class="rm-styling d-flex align-items-center justify-content-center rm-color">
-                <p class="font20">RM2</p>
-            </div>
-            <div class="rm-styling d-flex align-items-center justify-content-center rm-color">
-                <p class="font20">RM3</p>
-            </div>
-            <div class="rm-styling d-flex align-items-center justify-content-center rm-color">
-                <p class="font20">RM4</p>
-            </div>
-            <div class="rm-styling d-flex align-items-center justify-content-center rm-color">
-                <p class="font20">RM5</p>
-            </div>
+            <a class="leave-btn" href="/leave/{{ rm_id }}"><img src="{{ url_for('static', filename='images/leave.png')}}"></a>
         </div>
         <div id="message-log" class="d-flex flex-column message-log gap20 padding30">
-                <div class="message-container">
-                <p class="date-padding font20">User 2 Today: at 9:00 AM</p>
-                <div class="d-flex gap10 align-items-center ">
-                    <img src="../static/images/face.png" class="display-icon green">
-                    <p class="message-styling message-width">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio magnam
-                        dolorum reprehenderit corporis magni eius corrupti minus reiciendis sunt aspernatur. Vitae ab
-                        officia quidem, molestias autem alias dolores illum quisquam?</p>
-                </div>
-                </div>
-                <div class="message-container">
-                    <p class="date-padding font20">User 2 Today: at 9:00 AM</p>
-                    <div class="d-flex gap10 align-items-center ">
-                        <img src="../static/images/face.png" class="display-icon green">
-                        <p class="message-styling message-width">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio magnam
-                            dolorum reprehenderit corporis magni eius corrupti minus reiciendis sunt aspernatur. Vitae ab
-                            officia quidem, molestias autem alias dolores illum quisquam?</p>
-                    </div>
-                </div>
-                <div class="message-container">
-                    <p class="date-padding font20">User 2 Today: at 9:00 AM</p>
-                    <div class="d-flex gap10 align-items-center ">
-                        <img src="../static/images/face.png" class="display-icon green">
-                        <p class="message-styling message-width">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio magnam
-                            dolorum reprehenderit corporis magni eius corrupti minus reiciendis sunt aspernatur. Vitae ab
-                            officia quidem, molestias autem alias dolores illum quisquam?</p>
-                    </div>
-                </div>
-                <div class="message-container ">
-                    <p class="date-padding font20">User 2 Today: at 9:00 AM</p>
-                    <div class="d-flex gap10 align-items-center ">
-                        <img src="../static/images/face.png" class="display-icon green">
-                        <p class="message-styling message-width">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio magnam
-                            dolorum reprehenderit corporis magni eius corrupti minus reiciendis sunt aspernatur. Vitae ab
-                            officia quidem, molestias autem alias dolores illum quisquam?</p>
-                    </div>
-                </div>
 
-            
+                {% for message in messages %}
+                    <div class="message-container">
+                        <p class="date-padding font20">{{message.user.name}} {{message.created_at.strftime('%m/%d/%Y, %#I:%M%p')}}</p>
+                        <div class="d-flex gap10 align-items-center ">
+                            <img src="{{ url_for('static',filename='images/face.png') }}" class="display-icon green">
+                            <p class="message-styling message-width">{{message.message_content}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
         </div>
        
-            <img class="member-icon member-iconPos" src="../static/images/fluent_people-16-filled.png">
+            <img class="member-icon member-iconPos" src="{{ url_for('static', filename = 'images/user_list_icon.png') }}">
         
         <div class="right-panel d-flex flex-column align-items-end">
           
             
             <div class="user-list d-flex flex-column gap30 flipped mb-auto">
-                <div>
-                    <div class="user-styling d-flex justify-content-center align-items-center userone-color">
-                        <p class="font20">User 1</p>
-                    </div>
+                {% for user in users%}
+                <div class="user-styling d-flex justify-content-center align-items-center usertwo-color">
+                    <p class="font20">{{user.name}}</p>
                 </div>
-                <div>
-                    <div class="user-styling d-flex justify-content-center align-items-center usertwo-color">
-                        <p class="font20">User 2</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="user-styling d-flex justify-content-center align-items-center userfour-color">
-                        <p class="font20">User 3</p>
-                    </div>
-                </div>
-
-                <div>      
-                    <div class="user-styling d-flex justify-content-center align-items-center userfive-color">
-                        <p class="font20">User 4</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="user-styling d-flex justify-content-center align-items-center usersix-color">
-                        <p class="font20">User 5</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="user-styling d-flex justify-content-center align-items-center userseven-color">
-                        <p class="font20">User 6</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="user-styling d-flex justify-content-center align-items-center usereight-color">
-                        <p class="font20">User 7</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="user-styling d-flex justify-content-center align-items-center usereight-color">
-                        <p class="font20">User 7</p>
-                    </div>
-                </div>
-                
+                {% endfor %}
             </div>
         </div>
     </main>
@@ -145,11 +81,21 @@
     <!-- <form class="mx-auto col-4">
        
     </form> -->
-    <div class="mx-auto col-4">
-        <input id="messageInput" type="text" class="message-input" placeholder="  Message">
-    </div>
 
-    <script src="../static/js/testing.js">
+
+    <form class="mx-auto col-4">
+        <input id="messageInput" type="text" class="message-input" placeholder="  Message">
+    </form>
+
+
+    <script>
+        const user_name = "{{ cur_user.name }}";
+        const user_id  = "{{ session['user_id'] }}";
+        const room_id = "{{ rm_id }}";
+        const img_src = "{{ url_for('static', filename= 'images/face.png') }}"
+    </script>
+    <script src= "{{ url_for('static', filename = 'js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/testing.js') }}">
     </script>
 
 </body>

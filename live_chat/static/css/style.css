@@ -72,6 +72,7 @@ p {
     border: 1 solid black;
     overflow-y: scroll;
     height: 1023px;
+    width:55rem;
 }
 
 ::-webkit-scrollbar {
@@ -168,10 +169,38 @@ p {
     cursor: pointer;
 }
 
-.left-panel :nth-child(4){
-    box-shadow: 0px 0px 0px 10px rgba(255,204,128);
-}
 
 .display-none{
     display: none;
+}
+
+.no-a-styling:link{
+    text-decoration: none;
+}
+
+.no-a-styling:hover{
+    color:#464444;
+}
+.no-a-styling{
+    color:#464444;
+}
+
+.active{
+    box-shadow: 0px 0px 0px 10px rgba(255,204,128);
+}
+
+.leave-btn:link{
+    text-decoration: none;
+}
+
+.leave-btn:hover{
+    text-decoration: none;
+}
+
+.leave-btn{
+    width:96px;
+    height:84px;
+    position:relative;
+    left:20rem;
+    top:-5rem;
 }

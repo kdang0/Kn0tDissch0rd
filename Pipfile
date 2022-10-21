@@ -8,6 +8,8 @@ flask-socketio = "*"
 gevent-websocket = "*"
 eventlet = "*"
 flask = "*"
+pymysql = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 

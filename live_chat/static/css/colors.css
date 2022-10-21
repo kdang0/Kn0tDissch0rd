@@ -37,3 +37,16 @@
 .usereight-color{
     background-color: #E2C497;
 }
+
+.jnrm-color{
+    background-color:#CEF4F4;
+}
+
+.jnrm-btn-color{
+    background-color: #B3D984;
+    transition: background-color 0.5s;
+}
+
+.jnrm-btn-color:hover{
+    background-color: #668d37;
+}
