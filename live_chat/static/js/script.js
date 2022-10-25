@@ -1,6 +1,7 @@
 const socket = io.connect("http://127.0.0.1:5000");    
-// const table = document.getElementById("messages");
 const form = document.querySelector('form');
+const userList = document.querySelector('.user-list');
+const leave = document.querySelector(".leave-btn");
 socket.on("connect", () => {
     socket.emit('join_room', {
         name: user_name,
@@ -8,15 +9,22 @@ socket.on("connect", () => {
         user_id: user_id
     });
     initiateMessage();
+    initiateLeave();
     // loadMessages();
 });
 
-
 socket.on('join_room', data => {
-    console.log(`${data.name} joined the chat`)
+    console.log(`${data.name} joined the chat`);
+    createUsers(data.users);
 });
 
+socket.on('leave_room', data => {
+    console.log(`${data.user_name} left the chat`);
+    createUsers(data["users"]);
+})
+
 socket.on('send_message', data => {
+    console.log(data);
     createMessage(data)
 });
 
@@ -24,37 +32,34 @@ socket.on('load_messages', data =>{
     for(let msg of data.messages){
         createMessage(msg);
     }
-})
+});
 
-messageInput.addEventListener("keypress", (e) => {
-    if(e.code === "Enter"){
-        // console.log(message.value);
-        initiateMessage()
+socket.on('delete_room', () => {
+    window.location.replace("/home");
+});
 
+
+function initiateLeave(){
+    leave.onclick = e => {
+        handleLeave();
     }
-})
+}
 
-// socket.on('message', (message) => {
-//     console.log("Message logged: ", message);
-//     const tableRow = document.createElement("tr");
-//     const tableItem = document.createElement("td");
-//     tableItem.innerText = message;
-//     tableItem.classList.add('text-warning');
-//     tableRow.appendChild(tableItem);
-//     table.appendChild(tableRow);
-
-// });
 
 function initiateMessage(){
     // form.reset();
     messageInput.focus();
     form.onsubmit = e => {
         e.preventDefault();
-        console.log(messageInput.value);
-        console.log("HOHOHOHOHO");
         handleMessage();
         form.reset();
     }
+}
+
+function handleLeave(){
+    socket.emit('leave', {
+        room_id: room_id
+    })
 }
 
 function handleMessage(){
@@ -64,7 +69,25 @@ function handleMessage(){
         user_id: user_id,
         message_content: messageInput.value.trim() 
     });
-    initiateMessage();
+}
+
+function deleteChildren(parent){
+    while(parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function createUsers(content){
+    deleteChildren(userList);
+    for(user of content){
+        const userContainer = document.createElement("div");
+        userContainer.classList.add("user-styling", "d-flex", "justify-content-center", "align-items-center", "usertwo-color")
+        const userItem = document.createElement("p");
+        userItem.classList.add("font20");
+        userItem.innerText = user["user_name"];
+        userContainer.appendChild(userItem);
+        userList.append(userContainer);
+    }
 }
 
 
@@ -81,7 +104,6 @@ function createMessage(msg){
     userInfo.classList.add("date-padding", "font20");
     messageContainer.classList.add("message-container");
     message.innerText = msg["content"]; 
-    // console.log(messageInput.value);
     userInfo.innerText = msg["user_name"] + " " + msg["created_at"]
     messageContent.appendChild(img);
     messageContent.appendChild(message);
@@ -91,9 +113,6 @@ function createMessage(msg){
     messageLog.scrollTo(0, messageLog.scrollHeight)
 }
 
-// function createUserJoined(user_name){
-//     const
-// }
 
 function loadMessages(){
     socket.emit('load_messages', {

@@ -41,13 +41,12 @@ class Message:
         user_messages = []
         results = connectToMySQL('live_chat_schema').query_db(query, data)
         print(results)
-        if results:
-            for row in results:
-                message = cls(row)
-                user_data = {
-                    "id" : row["users.id"],
-                    **row
-                }
-                message.user = User(user_data)
-                user_messages.append(message)
-            return user_messages
+        for row in results:
+            message = cls(row)
+            user_data = {
+                "id" : row["users.id"],
+                **row
+            }
+            message.user = User(user_data)
+            user_messages.append(message)
+        return user_messages

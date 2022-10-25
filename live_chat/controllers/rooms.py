@@ -23,21 +23,26 @@ def home():
 def add_rm():
     return render_template("add.html")
 
-@app.route('/join', methods=["POST"])
-def join():
-    User.join({"room_id":request.form["room_id"], "user_id" : session["user_id"]})
-    room = Room.get_one({"id": request.form["room_id"]})
-    return redirect(f'/rm/{room.name}/{room.id}')
 
-
-@app.route('/leave/<int:id>')
-def leave(id):
-    room = Room.get_one({"id" : id})
+@socketio.on('leave')
+def handle_leave(data):
+    user = User.get_cur_user({"id": session["user_id"]})
+    room = Room.get_one({"id" : data["room_id"]})
     if room.user_id == session['user_id']:
-        User.leave({"room_id": id, "user_id" : session["user_id"]})
-        Room.delete({"id" : id})
-    User.leave({"room_id": id, "user_id" : session["user_id"]})
-    return redirect('/home')
+        Room.delete({"id" : data["room_id"]})
+        emit('delete_room',  room=f"{data['room_id']}")
+    user_data = {
+        "user_name" : user.name
+    }
+    User.leave({"room_id": data["room_id"], "user_id" : session["user_id"]})
+    leave_room(f"{data['room_id']}")
+    users = Room.get_users_joined({"id":data["room_id"]})
+    json_user_data = [];
+    for user in users.users_joined:
+        json_user_data.append({"user_name": user.name})
+    user_data["users"] = json_user_data
+    emit("leave_room", user_data, json=True, room=f"{data['room_id']}")
+    
 
 @app.route('/add', methods=["POST"])
 def create():
@@ -52,20 +57,33 @@ def rm(name, id):
     users = Room.get_users_joined({"id":id})
     all_messages = Message.get_user_messages({"room_id" : id})            
     user = User.get_cur_user({"id" : session["user_id"]})
-    print("length of list: ",len(users.users_joined))
-    for user in users.users_joined:
-        print("User's name",user.name)
-    if all_messages:
-        return render_template('room_chat.html', messages=all_messages,rooms=rooms.rooms_joined, users=users.users_joined,rm_id = id, rm_name = name, cur_user = user)
-    return render_template('room_chat.html', rooms=rooms.rooms_joined, users=users.users_joined, rm_name = name, cur_user = user, rm_id = id)
+    print("USER NAME IS: ",user.name)
+    return render_template('room_chat.html', messages=all_messages, rooms=rooms.rooms_joined, users=users.users_joined, cur_user = user, rm_id = id)
 
-@socketio.on("join_room")
+@socketio.on("joining_room")
 def handle_join_room(data):
+    User.join({"room_id":data["room_id"], "user_id" : session["user_id"]})
+    room = Room.get_one({"id": data["room_id"]})
+    rm_data = {
+        "room_id" : room.id,
+        "room_name" : room.name 
+    }
+    print("SENDING INFORMATION THIS INSTANT", rm_data)
+    emit('joining_room',rm_data, broadcast=True, json=True)
+
+@socketio.on('join_room')
+def handle_join(data):
     join_room(f"{data['room_id']}")
+    users = Room.get_users_joined({"id":data["room_id"]}).users_joined
+    json_user_data = [];
+    for user in users:
+        json_user_data.append({"user_name": user.name})
+    data["users"] = json_user_data
     emit('join_room',data, broadcast=True)
 
 @socketio.on('send_message')
 def handle_send_message(data):
+    print(data)
     msg_id = Message.save(
         {
             "message_content" : data["message_content"],
@@ -81,6 +99,7 @@ def handle_send_message(data):
         "created_at" : msg.created_at.strftime('%m/%d/%Y, %#I:%M%p'),
         "updated_at" : msg.created_at.strftime('%m/%d/%Y, %#I:%M%p')
     }
+    print("USER_NAME: ", msg_data["user_name"])
     emit('send_message', msg_data, room=f"{data['room_id']}")
 
 @socketio.on('load_messages')

@@ -48,3 +48,41 @@
 // decline.addEventListener("click", () => {
 //     pending.remove();
 // });
+const socket = io.connect("http://127.0.0.1:5000");    
+const joinRoom = document.getElementById("join-room");
+const form = document.querySelector('form');
+socket.on("connect", () => {
+    // socket.emit('join_room', {
+    //     name: user_name,
+    //     room_id: room_id,
+    //     user_id: user_id
+    // });
+    initiateJoin();
+    // loadMessages();
+});
+
+socket.on('joining_room', data => {
+    // console.log(`${data.name} joined the chat`);
+    console.log(data);
+    window.location.replace(`/rm/${data.room_name}/${data.room_id}`);
+});
+
+socket.on('update_availability', () => {
+    location.reload();
+})
+
+function handleJoin(){
+    socket.emit("joining_room", {
+        "room_id" : joinRoom.value
+    }); 
+}
+
+function initiateJoin(){
+    console.log(joinRoom.value);
+    form.onsubmit = e => {
+        e.preventDefault();
+        handleJoin();
+    }
+}
+
+

@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/lib.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/homestyle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/colors.css') }}">
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 </head>
 
 <body class="background-color">
@@ -69,9 +70,9 @@
         </div>
 
         {% if available_rooms %}
-        <form action="/join" method="POST" class="jnrm-color jnrm col-6 mx-auto display-flex flex-column gap50">
+        <form class="jnrm-color jnrm col-6 mx-auto display-flex flex-column gap50">
             <h1 class="display-4 text-center">JOIN ROOM</h1>
-            <select class="form-control-lg" name="room_id">
+            <select id="join-room" class="form-control-lg" name="room_id">
                 {% for room in available_rooms %}
                     {% if room.name != None %}
                         <option value="{{ room.id }}">{{ room.name }}</option>
@@ -138,7 +139,7 @@
     </form> -->
 
     <!-- <script src="../static/js/testinghome.js"> -->
-    </script>
+    <script src="{{ url_for('static', filename = 'js/scripthome.js') }}"></script>
 </body>
 
 </html>

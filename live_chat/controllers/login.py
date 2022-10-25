@@ -37,7 +37,8 @@ def register():
         **request.form
     }
     User.save(data)
-    return redirect('/')
+    session['user_id'] = User.get_cur_user({"email" : request.form["email"]}).id
+    return redirect('/home')
 
 @app.route('/logout')
 def logout():
