@@ -58,7 +58,7 @@ def rm(name, id):
     all_messages = Message.get_user_messages({"room_id" : id})            
     user = User.get_cur_user({"id" : session["user_id"]})
     print("USER NAME IS: ",user.name)
-    return render_template('room_chat.html', messages=all_messages, rooms=rooms.rooms_joined, users=users.users_joined, cur_user = user, rm_id = id)
+    return render_template('room_chat.html', messages=all_messages, rooms=rooms.rooms_joined, users=users.users_joined, cur_user = user, rm_id = id, room_name = name)
 
 @socketio.on("joining_room")
 def handle_join_room(data):
