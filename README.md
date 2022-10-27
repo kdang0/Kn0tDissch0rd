@@ -8,7 +8,7 @@ A personal, self-learning project that involves creating an instant messaging so
   - Database is handled with MySQL
   
 ## Live Demo
-https://user-images.githubusercontent.com/73298064/198186196-104adf06-293b-4725-98b2-35898ba2c93d.mp4
+https://user-images.githubusercontent.com/73298064/198188543-ed88e475-e9c9-4261-bcf3-8b516cbf126f.mp4
 
 ## Features Implemented
 - Live Chat 
