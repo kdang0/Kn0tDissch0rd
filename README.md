@@ -7,3 +7,7 @@ An instant messaging social platform
   - Serverside is handled with Flask
   - Database is handled with MySQL
   
+## Live Demo
+
+
+  
