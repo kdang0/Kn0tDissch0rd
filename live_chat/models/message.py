@@ -37,7 +37,10 @@ class Message:
     def get_user_messages(cls, data):
         query = "SELECT * FROM messages LEFT JOIN users " 
         query += "ON users.id = messages.user_id "
-        query += "WHERE room_id = %(room_id)s;"
+        query += "WHERE room_id = %(room_id)s "
+        query += "ORDER BY messages.created_at DESC "
+        query += "LIMIT %(limit)s "
+        query += "OFFSET %(offset)s;"
         user_messages = []
         results = connectToMySQL('live_chat_schema').query_db(query, data)
         print(results)

@@ -67,9 +67,9 @@ socket.on('joining_room', data => {
     window.location.replace(`/rm/${data.room_name}/${data.room_id}`);
 });
 
-socket.on('update_availability', () => {
-    location.reload();
-})
+// socket.on('update_availability', data => {
+//     createRooms(data["rooms"]);
+// })
 
 function handleJoin(){
     socket.emit("joining_room", {
@@ -82,6 +82,15 @@ function initiateJoin(){
     form.onsubmit = e => {
         e.preventDefault();
         handleJoin();
+    }
+}
+
+function createRooms(content){
+    for(room of content){
+        const roomOption = document.createElement("option");
+        roomOption.value = room["id"];
+        roomOption.innerText = room["name"];
+        joinRoomList.append(roomOption);
     }
 }
 

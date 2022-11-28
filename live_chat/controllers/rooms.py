@@ -1,4 +1,4 @@
-from live_chat import socketio
+from live_chat import socketio, MESSAGE_COUNT
 from flask_socketio import send, emit
 from flask import render_template, request, session, redirect
 from live_chat.models.user import User
@@ -14,7 +14,6 @@ def home():
         return redirect('/')
     user = User.get_rooms_joined({"id":session["user_id"]})
     rooms = Room.get_rooms_not_joined({"id":session["user_id"]})
-    print("ROOMS:", rooms)
     if rooms and not user.rooms_joined:
         return render_template("home.html", available_rooms = rooms)
     return render_template("home.html", rooms= user.rooms_joined, available_rooms = rooms)
@@ -54,11 +53,9 @@ def create():
 @app.route('/rm/<string:name>/<int:id>')
 def rm(name, id):
     rooms = User.get_rooms_joined({"id":session["user_id"]})
-    users = Room.get_users_joined({"id":id})
-    all_messages = Message.get_user_messages({"room_id" : id})            
+    users = Room.get_users_joined({"id":id})           
     user = User.get_cur_user({"id" : session["user_id"]})
-    print("USER NAME IS: ",user.name)
-    return render_template('room_chat.html', messages=all_messages, rooms=rooms.rooms_joined, users=users.users_joined, cur_user = user, rm_id = id, room_name = name)
+    return render_template('room_chat.html',  rooms=rooms.rooms_joined, users=users.users_joined, cur_user = user, rm_id = id, room_name = name)
 
 @socketio.on("joining_room")
 def handle_join_room(data):
@@ -99,12 +96,16 @@ def handle_send_message(data):
         "created_at" : msg.created_at.strftime('%m/%d/%Y, %#I:%M%p'),
         "updated_at" : msg.created_at.strftime('%m/%d/%Y, %#I:%M%p')
     }
-    print("USER_NAME: ", msg_data["user_name"])
     emit('send_message', msg_data, room=f"{data['room_id']}")
 
 @socketio.on('load_messages')
 def handle_load_messages(data):
-    messages = Message.get_user_messages(data)
+    load_data = {
+        "room_id" : data["room_id"], 
+        "limit" : MESSAGE_COUNT,
+        "offset" : MESSAGE_COUNT * (data["page"])
+    }
+    messages = Message.get_user_messages(load_data);
     json_messages = []
     for msg in messages:
         json_messages.append({
@@ -115,4 +116,4 @@ def handle_load_messages(data):
             "updated_at" : msg.created_at.strftime('%m/%d/%Y, %#I:%M%p'),
             "user_name" : msg.user.name
         })
-    emit('load_messages', {"messages" : json_messages}, json=True)
+    emit('load_messages', {"messages" : json_messages, "page" : data["page"]}, room=f"{data['room_id']}",json=True)

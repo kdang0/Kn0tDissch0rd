@@ -51,16 +51,7 @@
             <a class="leave-btn" href="/home"><img src="{{ url_for('static', filename='images/leave.png')}}"></a>
         </div>
         <div id="message-log" class="d-flex flex-column message-log gap20 padding30">
-
-                {% for message in messages %}
-                    <div class="message-container">
-                        <p class="date-padding font20">{{message.user.name}} {{message.created_at.strftime('%m/%d/%Y, %#I:%M%p')}}</p>
-                        <div class="d-flex gap10 align-items-center ">
-                            <img src="{{ url_for('static',filename='images/face.png') }}" class="display-icon green">
-                            <p class="message-styling message-width">{{message.message_content}}</p>
-                        </div>
-                    </div>
-                {% endfor %}
+                
         </div>
        
             <img class="member-icon member-iconPos" src="{{ url_for('static', filename = 'images/user_list_icon.png') }}">
