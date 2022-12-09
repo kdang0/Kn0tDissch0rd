@@ -16,12 +16,12 @@ https://user-images.githubusercontent.com/73298064/198188543-ed88e475-e9c9-4261-
 - User can leave another user's room
 - User can create their own room
 - User can delete their own room by leaving it and by doing so will kick everyone in that room
+- Pagination
 
 ## Future Features to be implemented
 - Users can customize their profile picture
 - Users can send emojis
 - Users can send images
-- Pagination
 - Video 
 - Screen share
 - Voice chat
